@@ -1,0 +1,9 @@
+# OSX
+.DS_Store
+
+# Fitbit data
+conf/.code
+conf/data.ini
+
+# Komodo
+WUZAlifeWeb.komodoproject

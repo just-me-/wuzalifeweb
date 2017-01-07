@@ -1,0 +1,4 @@
+AuthType	basic
+AuthName	"Unauthorized - Sorry; kein Zugriff"
+AuthUserFile	/dev/null
+Require		valid-user
