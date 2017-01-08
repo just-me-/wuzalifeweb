@@ -9,6 +9,15 @@ $username = $config['username'];
 $password = $config['password'];
 $file 	  = $config['file'];
 
+$cards = array(
+  array('icon' => 'account_box', 	'front' => 'Zähne am Mittag putzen', 	'back' => 'Check!', 'disabled' => 1),
+  array('icon' => 'account_box', 	'front' => 'Zähne am Abend putzen', 	'back' => 'Check!'),
+  array('icon' => 'face', 			'front' => 'Gesicht am Abend waschen', 	'back' => 'Check!'),
+  array('icon' => 'directions_run',	'front' => 'Heute Sport getrieben', 	'back' => 'Check!', 'disabled' => 1),
+  array('icon' => 'battery_full', 	'front' => 'Heute gesund gegessen?', 	'back' => 'Check!'),
+  array('icon' => 'pets', 			'front' => 'Heute keine Nägel gekaut', 	'back' => 'Check!')
+);
+
 session_start();
 
 // check login if given
@@ -97,8 +106,17 @@ if($_SESSION['access'] == 1){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+	
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="favicon/manifest.json">
+	<link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="favicon/favicon.ico">
+	<meta name="msapplication-config" content="favicon/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
     
-    <title>Fitbit</title>
+    <title>WUZAlife</title>
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="data/fitbit.css?version=%22<?php echo $version; ?>%22" rel="stylesheet">
@@ -106,9 +124,29 @@ if($_SESSION['access'] == 1){
   
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="data/jquery.flip.js"></script>
 		
 	<div class="main">
       <?php echo $main; ?>
+	  
+	  <?php
+	  foreach($cards as $i => $card){
+	  ?>
+		
+		<div id="<? echo $i ?>" class="card <? echo ($card['disabled'] ? 'disabled' : '') ?>"> 
+		  <div class="front"> 
+			<i class="material-icons"><? echo $card['icon'] ?></i>
+			<span><? echo $card['front'] ?></span>
+		  </div> 
+		  <div class="back">
+			<i class="material-icons">sentiment_very_satisfied</i>
+			<span><? echo $card['back'] ?></span>
+		  </div> 
+		</div>
+		
+	  <?php
+	  }
+	  ?>
 	</div>
 	
     <script src="data/fitbit.js?version=%22<?php echo $version; ?>%22"></script>

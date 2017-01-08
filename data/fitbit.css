@@ -10,7 +10,7 @@ body {
     
     max-width: 500px;
     width: 90%;
-    height: 250px;
+    height: 510px;
     
     margin: auto;
     margin-top: 50px;
@@ -36,3 +36,50 @@ a.fitbitcode {
 a.fitbitcode i {
     font-size: 40px; 
 }
+
+
+.card {
+    height: 90px;
+    width: 150px;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    opacity: 0.9;
+}
+.card.disabled {
+    opacity: 0.4;
+}
+.card .front, 
+.card .back {
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+.card .front {
+    background-color: rgba(37, 37, 37, 0.9);
+}
+.card .back {
+    background-color: rgba(92, 184, 92, 1);
+}
+
+.card .front i {
+    display: block;
+    float: right;
+    width: 25px;
+    margin-top: 20px
+}
+.card .front span {
+    display: block;
+    float: left;
+    width: 95px
+}
+.card .back i,
+.card .back span {
+    display: block;
+    text-align: center;
+}
+
+
+
