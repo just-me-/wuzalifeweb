@@ -10,7 +10,7 @@ body {
     
     max-width: 500px;
     width: 90%;
-    height: 510px;
+    height: 500px;
     
     margin: auto;
     margin-top: 50px;
@@ -29,12 +29,9 @@ body {
 }
 
 
-a.fitbitcode {
-    padding: 15px 2px;
-    display: block;
-}
 a.fitbitcode i {
-    font-size: 40px; 
+    font-size: 25px;
+    margin-left: 10px;
 }
 
 

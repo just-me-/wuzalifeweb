@@ -9,6 +9,9 @@ $username = $config['username'];
 $password = $config['password'];
 $file 	  = $config['file'];
 
+// cookie instand of short session
+$accesskey = $config['loginaccesskey'];
+
 $cards = array(
   array('icon' => 'account_box', 	'front' => 'Zähne am Mittag putzen', 	'back' => 'Check!', 'disabled' => 1),
   array('icon' => 'account_box', 	'front' => 'Zähne am Abend putzen', 	'back' => 'Check!'),
@@ -24,13 +27,18 @@ session_start();
 // if correct - start access session 
 if($_POST['username'] && $_POST['password']){
   if( ($_POST['username'] == $username) && ($_POST['password'] == $password) ) {
-    $_SESSION['access'] = 1; 
+	// use a timespan of 5 week
+	$remembering_timespan = time() + 5 * 7 * 24 * 60 * 60;
+	setcookie('access', $accesskey, $remembering_timespan);
+	$loggedin = 1;
+  } else {
+	setcookie('access', '', time()-3600);
   }
 }
 
 // show data/backend or login
-$main = ''; 
-if($_SESSION['access'] == 1){
+$main = '';
+if($_COOKIE['access'] == $accesskey || $loggedin == 1){
   
   // my personal generated request link
   // callback wuza.ch/fitbitm
@@ -40,6 +48,9 @@ if($_SESSION['access'] == 1){
               '&redirect_uri=https%3A%2F%2Fwuza.ch%2Ffitbitm%2Fwrite.php'.
               '&scope=profile%20weight'.
               '&expires_in=31536000';
+			  
+  // automatic write action if possible
+  $homepage = file_get_contents($request1);
 
   $tooken = file_get_contents($file);
   if($tooken){
@@ -80,10 +91,9 @@ if($_SESSION['access'] == 1){
   }
   
   $main .= '
-  <h1>'.$title.'</h1>
+  <h1>'.$title." <a class=\"fitbitcode\" href=\"$request1\"><i class=\"material-icons\">update</i></a>".'</h1>
   <p>'.$body.'</p>
   ';
-  $main .= "<a class=\"fitbitcode\" href=\"$request1\"><i class=\"material-icons\">update</i></a>";
   
 } else {
   // show login page
@@ -133,14 +143,14 @@ if($_SESSION['access'] == 1){
 	  foreach($cards as $i => $card){
 	  ?>
 		
-		<div id="<? echo $i ?>" class="card <? echo ($card['disabled'] ? 'disabled' : '') ?>"> 
+		<div id="<?php echo $i ?>" class="card <?php echo ($card['disabled'] ? 'disabled' : '') ?>"> 
 		  <div class="front"> 
-			<i class="material-icons"><? echo $card['icon'] ?></i>
-			<span><? echo $card['front'] ?></span>
+			<i class="material-icons"><?php echo $card['icon'] ?></i>
+			<span><?php echo $card['front'] ?></span>
 		  </div> 
 		  <div class="back">
 			<i class="material-icons">sentiment_very_satisfied</i>
-			<span><? echo $card['back'] ?></span>
+			<span><?php echo $card['back'] ?></span>
 		  </div> 
 		</div>
 		
