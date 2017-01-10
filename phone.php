@@ -12,8 +12,11 @@ $file 	  = $config['file'];
 // cookie instand of short session
 $accesskey = $config['loginaccesskey'];
 
+// set up cards 
+$dayofweek = date( "w", time()); // 0 (for sunday) through 6 (for saturday)
 $cards = array(
-  array('icon' => 'account_box', 	'front' => 'Zähne am Mittag putzen', 	'back' => 'Check!', 'disabled' => 1),
+  array('icon' => 'account_box', 	'front' => 'Zähne am Mittag putzen', 	'back' => 'Check!',
+		'disabled' => ($dayofweek == 1 || $dayofweek == 5) ? 1 : 0), // not on mo or fr
   array('icon' => 'account_box', 	'front' => 'Zähne am Abend putzen', 	'back' => 'Check!'),
   array('icon' => 'face', 			'front' => 'Gesicht am Abend waschen', 	'back' => 'Check!'),
   array('icon' => 'directions_run',	'front' => 'Heute Sport getrieben', 	'back' => 'Check!', 'disabled' => 1),
@@ -48,9 +51,6 @@ if($_COOKIE['access'] == $accesskey || $loggedin == 1){
               '&redirect_uri=https%3A%2F%2Fwuza.ch%2Ffitbitm%2Fwrite.php'.
               '&scope=profile%20weight'.
               '&expires_in=31536000';
-			  
-  // automatic write action if possible
-  $homepage = file_get_contents($request1);
 
   $tooken = file_get_contents($file);
   if($tooken){
@@ -134,6 +134,7 @@ if($_COOKIE['access'] == $accesskey || $loggedin == 1){
   
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="data/jquery.cookie.js"></script>
 	<script src="data/jquery.flip.js"></script>
 		
 	<div class="main">
@@ -141,9 +142,11 @@ if($_COOKIE['access'] == $accesskey || $loggedin == 1){
 	  
 	  <?php
 	  foreach($cards as $i => $card){
+		$classes = $card['disabled'] ? 'disabled' : '';
+		$classes .= ($_COOKIE['card_'.$i] == 'true') ? ' isChecked' : ''; // handle cookie value as string not as bool
 	  ?>
-		
-		<div id="<?php echo $i ?>" class="card <?php echo ($card['disabled'] ? 'disabled' : '') ?>"> 
+	  
+		<div id="<?php echo $i ?>" class="card <?php echo $classes ?>"> 
 		  <div class="front"> 
 			<i class="material-icons"><?php echo $card['icon'] ?></i>
 			<span><?php echo $card['front'] ?></span>

@@ -60,7 +60,37 @@ var color2 = "rgb("+r2+","+g2+","+b2+")";
 
 setInterval(updateGradient,10);
 
+// card animation
+$(".card").flip({
+  axis: 'x',
+  reverse: true
+});
 
+// update flip all checked cards on page load
+$(function() {
+    $('.card.isChecked').flip(true);
+});
 
-$(".card").flip();
+// check day activity 
+$( ".card" ).click(function() {
+  
+  $(this).toggleClass('isChecked');
+  
+  // save status in cookie - which will expire at midnight 
+  var midnight = new Date();
+  midnight.setHours(23,59,59,0);
+  $.cookie('card_'+$(this).attr('id'), $(this).data("flip-model").isFlipped, { expires: midnight });
+  
+  // get status over all 
+  var activeCards = $('.card').not('.disabled').length;
+  var checkedCards = $('.card.isChecked').not('.disabled').length;
+  
+  if (activeCards == checkedCards) {
+    // set flag "all done"
+    // 2do...
+    // $.post("api.php", {"key": intvalue, ...});
+  }
+  
+});
+
 
