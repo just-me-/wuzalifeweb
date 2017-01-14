@@ -91,7 +91,10 @@ if($_COOKIE['access'] == $accesskey || $loggedin == 1){
   }
   
   $main .= '
-  <h1>'.$title." <a class=\"fitbitcode\" href=\"$request1\"><i class=\"material-icons\">update</i></a>".'</h1>
+  <h1>'.$title
+	." <a class=\"fitbitcode\" href=\"$request1\"><i class=\"material-icons\">update</i></a>"
+	." <a class=\"fitbitapp\" href=\"fitbit://\"><i class=\"material-icons\">perm_identity</i></a>"
+  .'</h1>
   <p>'.$body.'</p>
   ';
   

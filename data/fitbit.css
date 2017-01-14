@@ -3,10 +3,12 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
     color: #333333;
+    margin: 0; 
+    padding : 0; 
 }
 
 .main {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.6);
     
     max-width: 500px;
     width: 90%;
@@ -14,7 +16,8 @@ body {
     
     margin: auto;
     margin-top: 40px;
-    padding: 10px 20px;
+    box-sizing: border-box;
+    padding: 10px 0 10px 15px;
     
     border-radius: 15px;
 }
@@ -29,9 +32,11 @@ body {
 }
 
 
-a.fitbitcode i {
+a.fitbitcode i,
+a.fitbitapp i {
     font-size: 25px;
     margin-left: 10px;
+    color: purple;
 }
 
 
